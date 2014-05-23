@@ -1,4 +1,4 @@
-function initMouseInput(game) {
+function initGameInput(game) {
   // Set up highlight toggling
   game.board.eachSquare(function() {
     $(this.el).click(this.reveal.bind(this));
@@ -20,7 +20,17 @@ function initMouseInput(game) {
       game.board.render();
     }
   });
-  $('#new-game').click(function() {
-    game.startGame();
-  })
+}
+
+function initMenuInput(game) {
+  $('#new-game-easy').click(function() {
+    console.log('hi');
+    game.startGame(0);
+  });
+  $('#new-game-medium').click(function() {
+    game.startGame(1);
+  });
+  $('#new-game-hard').click(function() {
+    game.startGame(2);
+  });
 }

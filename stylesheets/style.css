@@ -3,30 +3,9 @@ body {
   color: #99a;
 }
 
-#new-game {
-  margin: 0 auto;
-  width: 100px;
-  height: 40px;
-
-  border:2px solid #99a;
-  border-radius: 10px;
-
-  text-align: center;
-  line-height: 40px;
-  font-weight:100;
-
-  cursor: default;
-}
-
-#new-game:hover {
-  background-color: #99a;
-  color: #fff;
-}
-
 /* Conatiners */
 
 #game-container {
-  width: 411px;
   margin: 0 auto;
 }
 
@@ -38,14 +17,22 @@ body {
 }
 
 #menu-container {
-  margin-bottom: 36px;
+  padding-bottom: 60px;
+  margin: 0 auto;
+}
+
+#menu-container:before,
+#menu-container:after {
+  content: " ";
+  display: table;
+}
+
+#menu-container:after {
+  clear:both;
 }
 
 #board-container {
-  position:relative;
-
-  width: 411px;
-  height: 411px;
+  margin: 0 auto;
   background-color: #57a;
 }
 
@@ -54,9 +41,6 @@ body {
   top:0;
   left:0;
   background-color: rgba(0, 0, 0, 0.5);
-
-  width: 411px;
-  height: 411px;
 
   text-align:center;
   line-height: 411px;
@@ -67,17 +51,30 @@ body {
   cursor: default;
 }
 
-/* Each board square */
-.square {
-  position:relative;
-
-  width: 40px;
+/* Menu buttons */
+.new-game {
+  margin-right: 12px;
+  width: 100px;
   height: 40px;
   float:left;
 
-  margin-left: 1px;
-  margin-top: 1px;
+  border:2px solid #99a;
+  border-radius: 10px;
 
+  text-align: center;
+  line-height: 40px;
+  font-weight:100;
+
+  cursor: default;
+}
+
+.new-game:hover {
+  background-color: #99a;
+  color: #fff;
+}
+
+/* Each board square */
+.square {
   background-color: #8ae;
 }
 

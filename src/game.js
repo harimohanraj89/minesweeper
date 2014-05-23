@@ -14,22 +14,53 @@ function MinesweeperGame() {
   this.status = "game";
   this.result = $('<div>').attr('id', 'result');
 
-  initMouseInput(this);
+  this.probabilities = [0.15, 0.2, 0.2];
+  this.widths = [6, 10, 15];
+  this.heights = [8, 10, 12];
+
+  initMenuInput(this);
+  initGameInput(this);
 }
 
 MinesweeperGame.prototype.start = function() {
   this.board.parent.hide();
 }
 
-MinesweeperGame.prototype.startGame = function() {
-  this.resetSquares();
-  this.spawnMines(0.2);
+MinesweeperGame.prototype.startGame = function(difficulty) {
+
+  var probability = this.probabilities[difficulty];
+  var width = this.widths[difficulty];
+  var height = this.heights[difficulty];
+
+  this.newBoard(width, height, 40);
+  this.spawnMines(probability);
+  console.log('Probability: ' + probability);
+
   if (this.board.parent.css('display') === 'none') {
     this.board.parent.fadeIn(500);
   }
   this.cursor.visible = false;
   this.status = "game";
   this.render();
+  initGameInput(this);
+}
+
+MinesweeperGame.prototype.newBoard = function(width, height, size) {
+  if (this.board) {
+    this.board.parent.empty();
+  }
+  this.board = new Board({
+    width: width,
+    height: height,
+    squareSize: size,
+    parent: $('#board-container')
+  })
+  this.cursor = new Cursor({
+    board: this.board,
+    x: 0,
+    y: 0
+  });
+  this.resetSquares();
 }
 
 MinesweeperGame.prototype.resetSquares = function() {
@@ -83,6 +114,8 @@ MinesweeperGame.prototype.checkResult = function(){
 MinesweeperGame.prototype.winGame = function() {
   this.status = "win";
   this.result.text('w i n')
+              .css('width', this.board.parent.css('width'))
+              .css('height', this.board.parent.css('height'))
               .hide()
               .appendTo(this.board.parent)
               .fadeIn(500);
@@ -93,6 +126,8 @@ MinesweeperGame.prototype.loseGame = function() {
   this.revealMines();
   this.render();
   this.result.text('l o s e')
+              .css('width', this.board.parent.css('width'))
+              .css('height', this.board.parent.css('height'))
               .hide()
               .appendTo(this.board.parent)
               .fadeIn(500);
