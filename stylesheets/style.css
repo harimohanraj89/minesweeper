@@ -1,0 +1,128 @@
+body {
+  font-family: sans-serif;
+  color: #99a;
+}
+
+#new-game {
+  margin: 0 auto;
+  width: 100px;
+  height: 40px;
+
+  border:2px solid #99a;
+  border-radius: 10px;
+
+  text-align: center;
+  line-height: 40px;
+  font-weight:100;
+
+  cursor: default;
+}
+
+#new-game:hover {
+  background-color: #99a;
+  color: #fff;
+}
+
+/* Conatiners */
+
+#game-container {
+  width: 411px;
+  margin: 0 auto;
+}
+
+#title-container h1 {
+  margin-bottom: 36px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 100;
+}
+
+#menu-container {
+  margin-bottom: 36px;
+}
+
+#board-container {
+  position:relative;
+
+  width: 411px;
+  height: 411px;
+  background-color: #57a;
+}
+
+#result {
+  position: absolute;
+  top:0;
+  left:0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  width: 411px;
+  height: 411px;
+
+  text-align:center;
+  line-height: 411px;
+  font-size: 60px;
+  font-weight:100;
+  color: #fff;
+
+  cursor: default;
+}
+
+/* Each board square */
+.square {
+  position:relative;
+
+  width: 40px;
+  height: 40px;
+  float:left;
+
+  margin-left: 1px;
+  margin-top: 1px;
+
+  background-color: #8ae;
+}
+
+/* Selected squares */
+.mine {
+  background-color: #e88;
+}
+
+.safe {
+  background-color: #ddd;
+}
+
+/* Score */
+.score {
+  width:100%;
+  height:100%;
+
+  line-height:40px;
+  text-align:center;
+
+  font-size: 24px;
+  font-family: sans-serif;
+
+  cursor: default;
+}
+
+.zero  { color: #aaaaaa; }
+.one   { color: #886699; }
+.two   { color: #778888; }
+.three { color: #77aa77; }
+.four  { color: #997777; }
+.five  { color: #aa7755; }
+.six   { color: #be7652; }
+.seven { color: #be5252; }
+.eight { color: #beac52; }
+
+
+/* Cursor */
+.cursor {
+  position:absolute;
+  top:0;
+  left:0;
+
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.3);
+}
+
