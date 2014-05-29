@@ -14,7 +14,7 @@ function MinesweeperGame() {
   this.status = "game";
   this.result = $('<div>').attr('id', 'result');
 
-  this.probabilities = [0.15, 0.2, 0.2];
+  this.mines = [8, 20, 40];
   this.widths = [6, 10, 15];
   this.heights = [8, 10, 12];
 
@@ -28,7 +28,7 @@ MinesweeperGame.prototype.start = function() {
 
 MinesweeperGame.prototype.startGame = function(difficulty) {
 
-  var probability = this.probabilities[difficulty];
+  var probability = this.mines[difficulty];
   var width = this.widths[difficulty];
   var height = this.heights[difficulty];
 
@@ -72,14 +72,16 @@ MinesweeperGame.prototype.resetSquares = function() {
   });
 }
 
-MinesweeperGame.prototype.spawnMines = function(probability) {
-  this.board.eachSquare(function() {
-    if (Math.random() < probability) {
-      this.mine = true;
-    } else {
-      this.mine = false;
+MinesweeperGame.prototype.spawnMines = function(mines) {
+  minesRemaining = Math.min(mines, this.board.xSize() * this.board.ySize());
+  while (minesRemaining > 0) {
+    x = Math.floor(Math.random() * this.board.xSize());
+    y = Math.floor(Math.random() * this.board.ySize());
+    if (!this.board.square(x, y).mine) {
+      this.board.square(x, y).mine = true;
+      minesRemaining--;
     }
-  });
+  }
 }
 
 MinesweeperGame.prototype.revealMines = function() {
