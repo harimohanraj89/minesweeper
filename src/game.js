@@ -113,24 +113,29 @@ MinesweeperGame.prototype.checkResult = function(){
 
 MinesweeperGame.prototype.winGame = function() {
   this.status = "win";
-  this.result.text('w i n')
-              .css('width', this.board.parent.css('width'))
-              .css('height', this.board.parent.css('height'))
-              .hide()
-              .appendTo(this.board.parent)
-              .fadeIn(500);
+  this.applyResultStyle();
+  this.showResult('w i n');
 }
 
 MinesweeperGame.prototype.loseGame = function() {
   this.status = "lose";
   this.revealMines();
   this.render();
-  this.result.text('l o s e')
-              .css('width', this.board.parent.css('width'))
-              .css('height', this.board.parent.css('height'))
-              .hide()
-              .appendTo(this.board.parent)
-              .fadeIn(500);
+  this.applyResultStyle();
+  this.showResult('l o s e');
+}
+
+MinesweeperGame.prototype.applyResultStyle = function() {
+  this.result.css('width', this.board.parent.css('width'))
+             .css('height', this.board.parent.css('height'))
+             .css('line-height', this.board.parent.css('height'))
+}
+
+MinesweeperGame.prototype.showResult = function(text) {
+  this.result.text(text)
+             .hide()
+             .appendTo(this.board.parent)
+             .fadeIn(500);
 }
 
 // Extending Squares
