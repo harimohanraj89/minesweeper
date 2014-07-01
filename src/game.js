@@ -41,6 +41,7 @@ MinesweeperGame.prototype.startGame = function(difficulty) {
   }
   this.cursor.visible = false;
   this.status = "game";
+  this.difficulty = difficulty;
   this.render();
   initGameInput(this);
 }

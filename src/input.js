@@ -20,6 +20,9 @@ function initGameInput(game) {
       game.board.render();
     }
   });
+  game.result.click(function() {
+    game.startGame(game.difficulty);
+  });
 }
 
 function initMenuInput(game) {
