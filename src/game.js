@@ -18,6 +18,7 @@ function MinesweeperGame() {
   this.widths = [6, 10, 15];
   this.heights = [8, 10, 12];
 
+  this.flag = false
   initMenuInput(this);
   initGameInput(this);
 }
@@ -68,8 +69,12 @@ MinesweeperGame.prototype.resetSquares = function() {
   this.board.eachSquare(function() {
     this.revealed = false;
     this.mine = false;
+    this.flagged = false;
     $(this.el).empty();
     this.score = $('<div>').addClass('score');
+    console.log("before");
+    this.flag = $('<div>').addClass('flag').text('X');
+    console.log("after");
   });
 }
 
@@ -143,12 +148,20 @@ MinesweeperGame.prototype.showResult = function(text) {
 
 // Extending Squares
 // -----------------
+Square.prototype.handleClick = function(flag) {
+  if (flag) {
+    this.flagged = !this.flagged
+    console.log(this.flagged);
+  } else {
+    this.reveal();
+  }
+}
+
 Square.prototype.reveal = function() {
   if (this.revealed) {
     return;
   }
   this.revealed = true;
-  var square;
   if (this.neighborCount() === 0 && !this.mine) {
     this.revealNeighbors();
   }
@@ -197,15 +210,26 @@ Square.prototype.beforeRender = function() {
   } else {
     $(this.el).removeClass('mine');
     $(this.el).removeClass('safe');
+    this.renderFlag();
   }
 }
 
 Square.prototype.renderScore = function() {
-  var scoreClasses = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'];
+  var scoreClasses = ['zero', 'one',  'two', 'three',
+                      'four', 'five', 'six', 'seven',
+                      'eight'];
   var neighbors = this.neighborCount();
   this.score.addClass(scoreClasses[neighbors])
   this.score.text(neighbors);
   $(this.el).append(this.score);
+}
+
+Square.prototype.renderFlag = function() {
+  if (this.flagged) {
+    $(this.el).append(this.flag);
+  } else {
+    this.flag.detach();
+  }
 }
 
 // UI
