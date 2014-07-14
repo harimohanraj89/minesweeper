@@ -92,7 +92,7 @@ MinesweeperGame.prototype.spawnMines = function(mines) {
 MinesweeperGame.prototype.revealMines = function() {
   this.board.eachSquare(function() {
     if (this.mine) {
-      this.reveal();
+      this.reveal(true);
     }
   });
 }
@@ -166,33 +166,36 @@ Square.prototype.handleClick = function(flag) {
   }
 }
 
-Square.prototype.reveal = function() {
-  if (this.revealed || this.flagged) {
+Square.prototype.reveal = function(forced) {
+  if (this.revealed || (this.flagged && !forced)) {
     return;
+  }
+  if (this.mine) {
+    console.log("MY GOD! " + this.x + " " + this.y + " " + forced);
   }
   this.revealed = true;
   if (this.neighborCount() === 0 && !this.mine) {
-    this.revealNeighbors();
+    this.revealNeighbors(forced);
   }
 }
 
-Square.prototype.revealNeighbors = function() {
+Square.prototype.revealNeighbors = function(forced) {
   square = this.board.square(this.x+1, this.y);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x+1, this.y+1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x, this.y+1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x-1, this.y+1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x-1, this.y);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x-1, this.y-1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x, this.y-1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
   square = this.board.square(this.x+1, this.y-1);
-  square.reveal && !square.revealed ? square.reveal() : false;
+  square.reveal && !square.revealed ? square.reveal(forced) : false;
 }
 
 Square.prototype.neighborCount = function() {
@@ -228,8 +231,10 @@ Square.prototype.renderScore = function() {
                       'four', 'five', 'six', 'seven',
                       'eight'];
   var neighbors = this.neighborCount();
-  this.score.addClass(scoreClasses[neighbors])
-  this.score.text(neighbors);
+  this.score.addClass(scoreClasses[neighbors]);
+  var neighborsText;
+  neighbors > 0 ? neighborsText = neighbors : neighborsText = '';
+  this.score.text(neighborsText);
   $(this.el).append(this.score);
 }
 
