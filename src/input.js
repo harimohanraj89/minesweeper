@@ -14,7 +14,7 @@ function initGameInput(game) {
   game.board.parent.click(function(e) {
     if (game.status === "game") {
       e.preventDefault();
-      game.board.render();
+      game.render();
       game.checkResult();
     }
   });
@@ -40,7 +40,6 @@ function initGameInput(game) {
 
 function initMenuInput(game) {
   $('#new-game-easy').click(function() {
-    console.log('hi');
     game.startGame(0);
   });
   $('#new-game-medium').click(function() {

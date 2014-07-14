@@ -37,6 +37,14 @@ body {
   background-color: #57a;
 }
 
+#hud-container {
+  width:348px;
+  height: 60px;
+  margin: 0 auto;
+  line-height:60px;
+  text-align: center;
+}
+
 #result {
   position: absolute;
   top:0;

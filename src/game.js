@@ -12,6 +12,7 @@ function MinesweeperGame() {
   });
 
   this.status = "game";
+  this.hud = $("#hud-container")
   this.result = $('<div>').attr('id', 'result');
 
   this.mines = [8, 20, 40];
@@ -29,13 +30,13 @@ MinesweeperGame.prototype.start = function() {
 
 MinesweeperGame.prototype.startGame = function(difficulty) {
 
-  var probability = this.mines[difficulty];
+  var mines = this.mines[difficulty];
   var width = this.widths[difficulty];
   var height = this.heights[difficulty];
 
   this.newBoard(width, height, 40);
-  this.spawnMines(probability);
-  console.log('Probability: ' + probability);
+  this.spawnMines(mines);
+  this.minesRemaining = mines;
 
   if (this.board.parent.css('display') === 'none') {
     this.board.parent.fadeIn(500);
@@ -72,9 +73,7 @@ MinesweeperGame.prototype.resetSquares = function() {
     this.flagged = false;
     $(this.el).empty();
     this.score = $('<div>').addClass('score');
-    console.log("before");
     this.flag = $('<div>').addClass('flag').text('X');
-    console.log("after");
   });
 }
 
@@ -98,16 +97,27 @@ MinesweeperGame.prototype.revealMines = function() {
   });
 }
 
+MinesweeperGame.prototype.renderHud = function() {
+  console.log(this.minesRemaining)
+  this.hud.text('remaining: ' + this.minesRemaining);
+}
+
 MinesweeperGame.prototype.render = function() {
+  this.renderHud();
   this.board.render();
 }
 
 MinesweeperGame.prototype.checkResult = function(){
   var win = true;
   var lose = false;
+  this.minesRemaining = this.mines[this.difficulty];
+  var that = this;
   this.board.eachSquare(function() {
     win = win && (this.mine || this.revealed);
     lose = lose || (this.mine && this.revealed);
+    if (this.flagged && !this.revealed) {
+      that.minesRemaining -= 1;
+    }
   });
 
   if (win) {
@@ -151,14 +161,13 @@ MinesweeperGame.prototype.showResult = function(text) {
 Square.prototype.handleClick = function(flag) {
   if (flag) {
     this.flagged = !this.flagged
-    console.log(this.flagged);
   } else {
     this.reveal();
   }
 }
 
 Square.prototype.reveal = function() {
-  if (this.revealed) {
+  if (this.revealed || this.flagged) {
     return;
   }
   this.revealed = true;
