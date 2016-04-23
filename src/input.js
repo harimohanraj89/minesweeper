@@ -5,6 +5,12 @@ function initGameInput(game) {
       this.handleClick(game.flag);
     }).bind(this));
 
+    $(this.el).on('contextmenu', (function() {
+      this.handleClick(true);
+      game.render();
+      return false;
+    }).bind(this));
+
     $(this.el).mouseover(function() {
       game.cursor.to(this.x, this.y);
       game.cursor.visible = !this.revealed;

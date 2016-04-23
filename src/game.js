@@ -98,7 +98,6 @@ MinesweeperGame.prototype.revealMines = function() {
 }
 
 MinesweeperGame.prototype.renderHud = function() {
-  console.log(this.minesRemaining)
   this.hud.text('remaining: ' + this.minesRemaining);
 }
 
@@ -169,9 +168,6 @@ Square.prototype.handleClick = function(flag) {
 Square.prototype.reveal = function(forced) {
   if (this.revealed || (this.flagged && !forced)) {
     return;
-  }
-  if (this.mine) {
-    console.log("MY GOD! " + this.x + " " + this.y + " " + forced);
   }
   this.revealed = true;
   if (this.neighborCount() === 0 && !this.mine) {

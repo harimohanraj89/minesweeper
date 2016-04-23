@@ -158,7 +158,17 @@ a:hover {
 
 /* Info */
 #info-container {
-  padding-bottom: 30px;
   font-size: 12px;
   text-align:center;
+}
+
+/* Instructions */
+#instructions {
+  font-weight: 100;
+  text-align:center;
+  list-style: none;
+}
+
+#instructions li {
+
 }
